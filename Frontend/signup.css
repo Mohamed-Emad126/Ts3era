@@ -1,0 +1,78 @@
+.bg-color {
+    background-color: #121212;
+}
+
+.btn-sign {
+    background-color: #BA6D29;
+    color: #ffffff;
+}
+
+.btn-sign:hover {
+    background-color: white;
+    color: #01080A;
+}
+
+.color {
+    color: #ffffff;
+}
+
+main {
+    margin-top: 8vmin;
+    margin-bottom: 8vmax;
+}
+
+input {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-form {
+    background: rgba(0, 0, 0, 0.8);
+    opacity: 0.8;
+    padding-top: 4vmax;
+    padding-bottom: 4vmax;
+    border-radius: 14px;
+}
+
+.marg {
+    margin-bottom: 2vmin;
+}
+
+.name {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.name-f {
+    padding-right: 0px;
+}
+
+.name-r {
+    padding-left: 0px;
+}
+
+.btn-orange {
+    background-color: #BA6D29;
+    color: white;
+    width: 100%;
+}
+
+.btn-outline-primary {
+    width: 100%;
+}
+
+.btn-orange:hover {
+    background-color: #089d56;
+    color: black;
+}
+
+footer {
+    color: #01080A;
+    background-color: #5D8790;
+    padding: 2vmin 0vw 2vmin 0vw;
+}
+
+.footer-brand {
+    font-size: 5vmin;
+}

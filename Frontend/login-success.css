@@ -1,0 +1,36 @@
+.bg-color {
+    background-color: #121212;
+}
+
+.btn-sign {
+    background-color: #BA6D29;
+    color: #ffffff;
+}
+
+.btn-sign:hover {
+    background-color: white;
+    color: #01080A;
+}
+
+.color {
+    color: #ffffff;
+}
+
+.margin {
+    margin-top: 8vmin;
+    margin-bottom: 8vmin;
+}
+
+h1 {
+    font-size: 5vmax;
+}
+
+footer {
+    color: #01080A;
+    background-color: #5D8790;
+    padding: 2vmin 0vw 2vmin 0vw;
+}
+
+.footer-brand {
+    font-size: 5vmin;
+}
