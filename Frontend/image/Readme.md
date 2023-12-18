@@ -1,1 +1,1 @@
-# Just Another Useless Title
+# Another Useless Title
