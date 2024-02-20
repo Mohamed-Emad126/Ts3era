@@ -3,10 +3,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Ts3era.AuthServices;
 using Ts3era.Heler;
 using Ts3era.Models;
 using Ts3era.Models.Data;
+using Ts3era.Services.AuthServices;
+using Ts3era.Services.EmailServices;
+using Ts3era.Services.Role_Services;
+using Ts3era.Services.User_Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +56,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
     option.UseSqlServer(connection);
 });
 
+//injection 
+builder.Services.AddTransient<IUserServices, UserServices>();
+builder.Services.AddTransient<IRoleServices, RoleServices>();
 
 
 
@@ -63,7 +69,16 @@ builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 //Services login and Register 
 builder.Services.AddScoped<IAuthServices,AuthServices>();
+//add Email  confiquration 
+builder.Services.Configure<Emails>(builder.Configuration.GetSection("mailsettings"));
+builder.Services.AddTransient<IEmailServices,EmailServices>();
 
+builder.Services.Configure<IdentityOptions>(c => c.SignIn.RequireConfirmedEmail = true);
+builder.Services.Configure<DataProtectionTokenProviderOptions>(c => c.TokenLifespan = TimeSpan.FromHours(30));
+
+builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
 
 
 var app = builder.Build();

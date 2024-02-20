@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\BackEnd",
+    "\\BackEnd\\Ts3era",
+    "\\BackEnd\\Ts3era\\Ts3era",
+    "\\BackEnd\\Ts3era\\Ts3era\\Dto"
   ],
+  "SelectedNode": "\\BackEnd\\Ts3era\\Ts3era\\Dto\\RegisterDto.cs",
   "PreviewInSolutionExplorer": false
 }
