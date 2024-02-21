@@ -96,13 +96,7 @@ namespace Ts3era.Services.AuthServices
             authmodel.Role = roleresult.ToList();
             authmodel.UserName = user.UserName;
 
-
-
             return authmodel;
-
-
-
-
 
 
         }
@@ -248,6 +242,53 @@ namespace Ts3era.Services.AuthServices
             await userManager.UpdateAsync(user);
 
             return true;
+        }
+
+
+
+
+
+       public async  Task<Authmodel> AddAdmin(AddAdminDto dto)
+        {
+          
+                if (await userManager.FindByEmailAsync(dto.Email) != null)
+                    return new Authmodel { Massage = "(!البريد الإلكتروني قيد التسجيل(موجود بالفعل)" };
+
+              if (await userManager.FindByNameAsync(dto.UsreName) != null)
+                return new Authmodel { Massage = "(!اسم المستخدم  قيد التسجيل(موجود بالفعل)" };
+
+            var user = new ApplicationUser
+            {
+                UserName = dto.UsreName,
+                Email = dto.Email,
+                PasswordHash = dto.Password
+            };
+
+           var result = await userManager.CreateAsync(user,dto.Password);
+            
+            if (!result.Succeeded)
+            {
+                var erros = string.Empty;
+                foreach (var error in result.Errors)
+                {
+                    erros += $"{error.Description}&&";                    
+                }
+                return new Authmodel { Massage= erros};
+            }
+
+            await userManager.AddToRoleAsync(user,"admin");
+
+            var jwt =await  Createtoken(user);
+
+
+            return new Authmodel
+            {
+                UserName = dto.UsreName,
+                Email = dto.Email,
+                Role = new List<string> { "admin" },
+                IsAuthanticated = true,
+                Token=new JwtSecurityTokenHandler().WriteToken(jwt),
+            };
         }
 
         private RefreshToken GenerateRefreshToken()

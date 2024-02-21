@@ -7,6 +7,7 @@ namespace Ts3era.Services.AuthServices
     {
         Task<Authmodel> Register(RegisterDto registerDto);
         Task<Authmodel> Login(LoginDto loginDto);
+        Task<Authmodel> AddAdmin(AddAdminDto dto );
         Task<string>ChangePassword (ChangePasswordDto changePasswordDto);
         Task<string> AssienRoleToUser(AddRoleToUser dto);
 

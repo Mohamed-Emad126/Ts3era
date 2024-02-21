@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Org.BouncyCastle.Pkix;
 using System.Text;
 using Ts3era.Heler;
 using Ts3era.Models;
@@ -61,7 +62,7 @@ builder.Services.AddTransient<IUserServices, UserServices>();
 builder.Services.AddTransient<IRoleServices, RoleServices>();
 
 
-
+//
 //jwt 
 
 builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));

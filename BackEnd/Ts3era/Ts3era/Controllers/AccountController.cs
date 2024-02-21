@@ -222,6 +222,19 @@ namespace Ts3era.Controllers
 
         }
 
+
+
+        [HttpPost("AddAdmin")]
+        public async Task<IActionResult>AddAdmin(AddAdminDto dto)
+        {
+            if (ModelState.IsValid)
+            {
+                var admin = await authServices.AddAdmin(dto);
+                return Ok(admin);
+
+            }
+            return BadRequest(ModelState);
+        }
         private void SetRefreshTokenInCookie(string token,DateTime expires)
         {
             var cookieoption = new CookieOptions
