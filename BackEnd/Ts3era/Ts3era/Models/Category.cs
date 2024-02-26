@@ -2,6 +2,6 @@
 {
     public class Category:BaseEntity
     {
-        public List<SubCategory> subCategories = new List<SubCategory>();
+        public List<SubCategory> subCategories { get; set; } = new List<SubCategory>();
     }
 }

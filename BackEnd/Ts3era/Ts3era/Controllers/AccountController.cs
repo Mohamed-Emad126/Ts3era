@@ -115,7 +115,7 @@ namespace Ts3era.Controllers
 
                 }
                 return StatusCode(StatusCodes.Status400BadRequest,
-                    new { Error = "Error", message = "couldn't send email  ,please try Again ! " });
+                    new { Error = "Error", message = " couldn't send email ,please try Again ! " });
 
 
             }
@@ -140,7 +140,7 @@ namespace Ts3era.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await userManager.FindByEmailAsync(dto.Email);
+                var user = await  userManager.FindByEmailAsync(dto.Email);
                 if (user != null)
                 {
                     var resultpassword = await userManager.ResetPasswordAsync(user, dto.Token, dto.NewPassword);
