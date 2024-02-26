@@ -5,7 +5,7 @@ using Ts3era.Services.User_Services;
 
 namespace Ts3era.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
         
@@ -16,8 +16,8 @@ namespace Ts3era.Controllers
         {
             this.services = services;
         }
-        [HttpGet("GetAllUsers")]
-        public async Task<IActionResult>Getall(string? search = "")
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ApplicationUser>>> GetAllUsers(string? search = "")
         {
             if (ModelState.IsValid)
             {
@@ -26,7 +26,7 @@ namespace Ts3era.Controllers
             }
             return BadRequest(ModelState);
         }
-        [HttpGet("int:id")]
+        [HttpGet]
         public async Task<IActionResult>GetbyId(string  id)
         {
             if (ModelState.IsValid)
@@ -37,8 +37,8 @@ namespace Ts3era.Controllers
             return BadRequest(ModelState);  
         }
 
-        [HttpPut]
-        public async Task<IActionResult>Update(string id,ApplicationUser user)
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult<ApplicationUser>>UpdateUser(string id,ApplicationUser user)
         {
             
             if (ModelState.IsValid)

@@ -11,7 +11,7 @@ using Ts3era.Services.EmailServices;
 namespace Ts3era.Controllers
 {
     //hgnbvnbbvvn
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -58,8 +58,8 @@ namespace Ts3era.Controllers
         #endregion
 
 
-        [HttpPost("Register")]
-        public async Task<IActionResult> Register([FromBody]RegisterDto model)
+        [HttpPost]
+        public async Task<ActionResult<RegisterDto>> Register([FromBody]RegisterDto model)
         {
             if (ModelState.IsValid)
             {
@@ -72,8 +72,8 @@ namespace Ts3era.Controllers
             }
             return BadRequest(ModelState);
         }
-        [HttpPost("Login")]
-        public async Task<IActionResult>Login([FromBody]LoginDto model)
+        [HttpPost]
+        public async Task<ActionResult<LoginDto>>Login([FromBody]LoginDto model)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace Ts3era.Controllers
         }
 
 
-        [HttpPost("ForgetPassword")]
+        [HttpPost]
         public async Task<IActionResult> ForgetPassword(ForgetPasswordDto dto)
         {
             if (ModelState.IsValid)
@@ -115,7 +115,7 @@ namespace Ts3era.Controllers
 
                 }
                 return StatusCode(StatusCodes.Status400BadRequest,
-                    new { Error = "Error", message = "couldn't send email  ,please try Again ! " });
+                    new { Error = "Error", message = " couldn't send email ,please try Again ! " });
 
 
             }
@@ -123,7 +123,7 @@ namespace Ts3era.Controllers
         }
 
 
-        [HttpGet("ResetPassord")]
+        [HttpGet]
         public async Task<IActionResult> ResetPassword(string token, string email)
         {
             if (ModelState.IsValid)
@@ -135,12 +135,12 @@ namespace Ts3era.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpPost("ResetPassord")]
+        [HttpPost]
         public async Task<IActionResult> ResetPassord([FromForm] ResetPasswordDto dto)
         {
             if (ModelState.IsValid)
             {
-                var user = await userManager.FindByEmailAsync(dto.Email);
+                var user = await  userManager.FindByEmailAsync(dto.Email);
                 if (user != null)
                 {
                     var resultpassword = await userManager.ResetPasswordAsync(user, dto.Token, dto.NewPassword);
@@ -162,7 +162,7 @@ namespace Ts3era.Controllers
 
 
 
-        [HttpPost("ChangePassword")]
+        [HttpPost]
         public async Task<IActionResult> ChangePassword([FromForm] ChangePasswordDto changePasswordDto)
         {
             if (ModelState.IsValid)
@@ -177,8 +177,8 @@ namespace Ts3era.Controllers
 
         }
 
-        [HttpGet("AddUserToRole")]
-        public async Task<IActionResult>AssienRoleTOUser(AddRoleToUser dto)
+        [HttpGet]
+        public async Task<IActionResult> AddUserToRole(AddRoleToUser dto)
         {
             if (ModelState.IsValid)
             {
@@ -196,7 +196,7 @@ namespace Ts3era.Controllers
         }
 
 
-        [HttpGet("RefreshToken")]
+        [HttpGet]
         public async Task<IActionResult> RefreshToken()
         {
             var refreshtoken = Request.Cookies["RefreshToken"];
@@ -209,7 +209,7 @@ namespace Ts3era.Controllers
             return Ok(result);
 
         }
-        [HttpPost("RefreshToken")]
+        [HttpPost]
         public async Task<IActionResult> RefreshToken([FromBody] RevokeTokenDto dto)
         {
             var token = dto.Token ?? Request.Cookies["RefreshToken"];
@@ -224,8 +224,8 @@ namespace Ts3era.Controllers
 
 
 
-        [HttpPost("AddAdmin")]
-        public async Task<IActionResult>AddAdmin(AddAdminDto dto)
+        [HttpPost]
+        public async Task<ActionResult<AddAdminDto>>AddAdmin(AddAdminDto dto)
         {
             if (ModelState.IsValid)
             {

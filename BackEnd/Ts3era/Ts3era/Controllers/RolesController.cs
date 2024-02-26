@@ -8,7 +8,7 @@ using Ts3era.Services.Role_Services;
 
 namespace Ts3era.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class RolesController : ControllerBase
     {
@@ -29,8 +29,8 @@ namespace Ts3era.Controllers
             this.roleManager = roleManager;
             this.userManager = userManager;
         }
-        [HttpPost("AddNewRole")]
-        public async Task<IActionResult>AddRole(AddRoleDto dto)
+        [HttpPost]
+        public async Task<IActionResult>AddNewRole(AddRoleDto dto)
         {
             if (ModelState.IsValid) 
             {
@@ -47,8 +47,8 @@ namespace Ts3era.Controllers
         }
 
 
-        [HttpGet("GetAllRoles")]
-        public async Task<IActionResult> GetRoles()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<IdentityRole>>> GetAllRoles()
         {
             if (ModelState.IsValid)
             {
@@ -59,8 +59,8 @@ namespace Ts3era.Controllers
             return BadRequest(ModelState);    
         }
 
-        [HttpPut]
-        public async Task<IActionResult>Update (string id ,AddRoleDto dto)
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult<AddRoleDto>>UpdateROle (string id ,AddRoleDto dto)
         {
             if (ModelState.IsValid)
             {
