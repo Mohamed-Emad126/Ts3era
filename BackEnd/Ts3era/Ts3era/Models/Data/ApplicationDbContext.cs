@@ -20,7 +20,10 @@ namespace Ts3era.Models.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }   
-        public DbSet<Product> Products { get; set; }    
+        public DbSet<Product> Products { get; set; }   
+        public DbSet<Governorates> Governorates { get; set;}
+        public DbSet<Ports> Ports { get; set; }
+        public DbSet<PortTypes> PortTypes { get; set; } 
     }
 
 }

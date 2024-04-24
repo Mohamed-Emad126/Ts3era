@@ -107,6 +107,7 @@ namespace Ts3era.Services.Role_Services
                     }
                 }
             }
+
             catch (Exception ex)
             {
                 logger.LogError(ex.Message);
