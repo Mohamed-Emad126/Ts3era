@@ -192,7 +192,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseStaticFiles();
-app.UseCors();
+app.UseCors("Mypolicy");
 app.UseRouting();
 
 app.UseHttpsRedirection();
