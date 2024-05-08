@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,8 @@ namespace Ts3era.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+   /// [Authorize(Roles = "admin")]
+
     public class RolesController : ControllerBase
     {
         private readonly RoleManager<IdentityRole> signInManager;
@@ -48,7 +51,7 @@ namespace Ts3era.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<IdentityRole>>> GetAllRoles()
+        public async Task<ActionResult<IEnumerable<RoleDto>>> GetAllRoles()
         {
             if (ModelState.IsValid)
             {
@@ -75,15 +78,19 @@ namespace Ts3era.Controllers
         {
             if (ModelState.IsValid)
             {
-
-                var role = services.Delete(id);
-                return Ok(role);
+                if (id != null)
+                {
+                    await services.Delete(id);
+                    return Ok("Deleted Role");
+                }
+              
+                //return StatusCode(401,new { Message =" Deleted Role " });
             }
             return BadRequest(ModelState);
         }
 
 
-        [HttpGet("CheckBox")]
+        [HttpGet("CheckBox")]//Test 
         public async Task<IActionResult>AdduserOrRemove (string roleid)
         {
             if (ModelState.IsValid)
@@ -103,10 +110,11 @@ namespace Ts3era.Controllers
                     };
                     if (await userManager.IsInRoleAsync(user,roleid))
                         userinrole.Is_Selected = true;
+
                     else userinrole.Is_Selected= false;
                     users.Add(userinrole);
 
-                    return Ok(userinrole);
+                    return Ok(users);
                 }
 
 

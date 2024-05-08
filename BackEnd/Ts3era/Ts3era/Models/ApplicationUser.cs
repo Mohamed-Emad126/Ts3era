@@ -15,5 +15,6 @@ namespace Ts3era.Models
         public string  National_Id { get; set;}
 
         public  List<RefreshToken> ?RefreshTokens { get; set; }
+        public List<FavoriteProductUser>? FavoriteProducts { get; set;}
     }
 }

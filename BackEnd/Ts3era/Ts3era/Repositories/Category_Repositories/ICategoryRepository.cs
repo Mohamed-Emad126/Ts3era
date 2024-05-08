@@ -16,5 +16,7 @@ namespace Ts3era.Repositories.Category_Repositories
         Task Delete (int id);  
         Task<bool>isvaliidcategory(int id);
 
+        Task<int> GetCountCategory();
+
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Azure;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Ts3era.Dto.AuthanticationDto;
 
@@ -8,15 +10,18 @@ namespace Ts3era.Services.Role_Services
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly ILogger<RoleServices> logger;
+        private readonly IMapper mapper;
 
         public RoleServices
             (
             RoleManager<IdentityRole> roleManager,
-            ILogger<RoleServices> logger
+            ILogger<RoleServices> logger,
+            IMapper mapper 
             )
         {
             this.roleManager = roleManager;
             this.logger = logger;
+            this.mapper = mapper;
         }
         public async Task<string> create(AddRoleDto dto)
         {
@@ -53,10 +58,11 @@ namespace Ts3era.Services.Role_Services
 
     
 
-        public async Task<List<IdentityRole>> GetAll()
+        public async Task<List<RoleDto>> GetAll()
         {
             var roles = await roleManager.Roles.ToListAsync();
-            return roles;
+            var map=mapper.Map<List<RoleDto>>(roles);
+            return map;
 
         }
 
@@ -82,46 +88,46 @@ namespace Ts3era.Services.Role_Services
         }
         public async Task Delete(string roleid)
         {
+            var role =await roleManager.Roles.FirstOrDefaultAsync(c=>c.Id == roleid);
+            //if (role == null)
+            //{
+            //    throw new Exception("Not Found Role !");
+            //}
+            //else
+            //{
+          //      try
+          //      {
+          //          var result = await roleManager.DeleteAsync(role);
+          //          if (!result.Succeeded)
+          //          {
+          //              var errors = string.Empty;
+
+          //              foreach (var error in result.Errors)
+          //              {
+          //                  errors += $"{error.Description},";
+          //              }
+          //              throw new Exception(errors);
+          //          }
+
+
+          //      }
+          //      catch (Exception ex)
+          //      {
+          //          logger.LogError(ex, ex.Message);
+
+          //      }
+          ////  }
+
+            if(role ==null  || roleid != role.Id)
             {
-                var roles = new IdentityRole();
-                if (roles.Id != roleid)
-                    throw new Exception("اسم الدور غير موجود");
-
-                try
-                {
-
-                    var role = await roleManager.Roles.FirstOrDefaultAsync(c => c.Id == roleid);
-                if (role != null)
-                {
-
-                    var result = await roleManager.DeleteAsync(role);
-                    if (!result.Succeeded)
-                    {
-                        var errors = string.Empty;
-                        foreach (var error in result.Errors)
-                        {
-                            errors += $"{error.Description},";
-                        }
-                       
-                        throw new Exception(errors);
-                    }
-                }
+                throw new Exception("Not Found Role !");
             }
-
-            catch (Exception ex)
+            else
             {
-                logger.LogError(ex.Message);
-
-
+                await roleManager.DeleteAsync(role);
             }
-
-
-
-
-
             
         }
-    }
 
     }
 }

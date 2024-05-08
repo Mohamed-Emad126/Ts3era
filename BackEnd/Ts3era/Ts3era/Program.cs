@@ -13,6 +13,11 @@ using Ts3era.MiddleWares;
 using Ts3era.Models;
 using Ts3era.Models.Data;
 using Ts3era.Repositories.Category_Repositories;
+using Ts3era.Repositories.Complaint_Repositories;
+using Ts3era.Repositories.FavProductServices;
+using Ts3era.Repositories.Governoreate_Repositories;
+using Ts3era.Repositories.Port_Repositories;
+using Ts3era.Repositories.Port_TypeRepositories;
 using Ts3era.Repositories.Product_Repositories;
 using Ts3era.Repositories.SubCategory_Repositories;
 using Ts3era.Services.AuthServices;
@@ -136,9 +141,17 @@ builder.Services.AddTransient<IRoleServices, RoleServices>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<ISubCategoryRepository, SubCategoryRepository>();
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
+builder.Services.AddTransient<IComplaintRepository, ComplaintRepository>();
+builder.Services.AddTransient<IGovernorate_Repository, Governorate_Repository>();
+builder.Services.AddTransient<IPortRepository, PortRepository>();
+builder.Services.AddTransient<IPortType_Repositort, PortType_Repository>();
 
+
+builder.Services.AddTransient<IFavoriteServies, FavoriteServies>(); 
 //Automapper 
 builder.Services.AddAutoMapper(typeof(Program));//full project 
+ 
+
 
 
 //jwt 
@@ -160,6 +173,14 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
                 .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
 
 
+builder.Services.AddCors(corsoption =>
+{
+    corsoption.AddPolicy("Mypolicy", crospolicy => crospolicy.WithOrigins("http://localhost:3000/")
+    .AllowAnyMethod()
+    .AllowAnyOrigin()
+    .AllowAnyHeader()
+    );
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -169,6 +190,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.UseMiddleware<ExceptionMiddleWare>();
 }
+
+app.UseStaticFiles();
+app.UseCors();
+app.UseRouting();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

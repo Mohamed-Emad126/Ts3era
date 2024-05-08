@@ -14,5 +14,7 @@ namespace Ts3era.Repositories.Product_Repositories
 
         Task<List<SubCategoriesDto>> GetAllSubCategories();
         Task Delete(int id);
+
+        Task<int> GetCountProduct();
     }
 }

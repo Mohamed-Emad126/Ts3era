@@ -3,5 +3,6 @@
     public class UpdateProductDto:BaseProductDto
     {
         public IFormFile?Image { get; set; }    
+       
     }
 }

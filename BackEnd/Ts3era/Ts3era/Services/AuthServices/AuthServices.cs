@@ -12,6 +12,7 @@ using Ts3era.Heler;
 using Ts3era.Models;
 using Org.BouncyCastle.Crypto;
 using Microsoft.EntityFrameworkCore;
+using Ts3era.Dto.UsersDto;
 
 namespace Ts3era.Services.AuthServices
 {
@@ -19,14 +20,18 @@ namespace Ts3era.Services.AuthServices
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
         private readonly JWT jWT;
-        public AuthServices(UserManager<ApplicationUser> userManager,
+        public AuthServices(
+            UserManager<ApplicationUser> userManager,
             IOptions<JWT> _Jwt,
-            RoleManager<IdentityRole> roleManager
+            RoleManager<IdentityRole> roleManager,
+            SignInManager<ApplicationUser> signInManager
             )
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.signInManager = signInManager;
             jWT = _Jwt.Value;
         }
 
@@ -120,7 +125,7 @@ namespace Ts3era.Services.AuthServices
             /*Add signingCredentials*/
 
             /*Addkey=>*/
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jWT.key));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jWT.Key));
 
             SigningCredentials signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -128,7 +133,7 @@ namespace Ts3era.Services.AuthServices
             var token = new JwtSecurityToken(
 
                 issuer: jWT.Issuer,
-                audience: jWT.Audiece,
+                audience: jWT.Audience,
                 expires: DateTime.Now.AddDays(jWT.DurationInDays),
                 claims: claim,
                 signingCredentials: signingCredentials
@@ -250,47 +255,96 @@ namespace Ts3era.Services.AuthServices
 
        public async  Task<Authmodel> AddAdmin(AddAdminDto dto)
         {
-          
-                if (await userManager.FindByEmailAsync(dto.Email) != null)
-                    return new Authmodel { Massage = "(!البريد الإلكتروني قيد التسجيل(موجود بالفعل)" };
 
-              if (await userManager.FindByNameAsync(dto.UsreName) != null)
-                return new Authmodel { Massage = "(!اسم المستخدم  قيد التسجيل(موجود بالفعل)" };
+            /*  if (await userManager.FindByEmailAsync(dto.Email) != null)
+                  return new Authmodel { Massage = "(!البريد الإلكتروني قيد التسجيل(موجود بالفعل)" };
 
-            var user = new ApplicationUser
-            {
-                UserName = dto.UsreName,
-                Email = dto.Email,
-                PasswordHash = dto.Password
-            };
+            if (await userManager.FindByNameAsync(dto.UsreName) != null)
+              return new Authmodel { Massage = "(!اسم المستخدم  قيد التسجيل(موجود بالفعل)" };
 
-           var result = await userManager.CreateAsync(user,dto.Password);
+          var user = new ApplicationUser();
+
+          user.UserName = dto.UsreName;
+          user.Email = dto.Email;
+          user.PasswordHash = dto.Password;
+
+
+         var result = await userManager.CreateAsync(user,dto.Password);
+
+          if (!result.Succeeded)
+          {
+              var erros = string.Empty;
+              foreach (var error in result.Errors)
+              {
+                  erros += $"{error.Description}&&";                    
+              }
+              return new Authmodel { Massage= erros};
+          }
+
+           var role =    await userManager.AddToRoleAsync(user,"Admin");
+
+          var jwt =await  Createtoken(user);
+
+
+          return new Authmodel
+          {
+              UserName = dto.UsreName,
+              Email = dto.Email,
+              Role = new List<string> { role.ToString() },
+              IsAuthanticated = true,
+              Token=new JwtSecurityTokenHandler().WriteToken(jwt),
+          };*/
+            if (await userManager.FindByNameAsync(dto.UserName) != null)
+                return new Authmodel { Massage = "(!اسم المستخدم  قيد التسجيل(موجود بالفعل" };
+            if (await userManager.FindByEmailAsync(dto.Email) != null)
+                return new Authmodel { Massage = "(!البريد الإلكتروني قيد التسجيل (موجود بالفعل" };
+
+            var user = new ApplicationUser();
+            user.UserName = dto.UserName;
+            user.Email = dto.Email;
+            user.PasswordHash = dto.Password;
+            user.PhoneNumber = dto.PhoneNumber;
+            user.FirstName = dto.FirstName;
+            user.LastName = dto.LastName;
+            user.National_Id = dto.National_Id;
             
+
+            IdentityResult result = await userManager.CreateAsync(user, dto.Password);
             if (!result.Succeeded)
             {
-                var erros = string.Empty;
-                foreach (var error in result.Errors)
+
+                var error = string.Empty;
+                foreach (var item in result.Errors)
                 {
-                    erros += $"{error.Description}&&";                    
+                    error += $"{item.Description}&";
+
                 }
-                return new Authmodel { Massage= erros};
+                return new Authmodel { Massage = error };
             }
 
-            await userManager.AddToRoleAsync(user,"admin");
 
-            var jwt =await  Createtoken(user);
-
+            var role = await userManager.AddToRoleAsync(user, "Admin");
+            ///get token 
+            var jwttoken = await Createtoken(user);
 
             return new Authmodel
             {
-                UserName = dto.UsreName,
+                UserName = dto.UserName,
                 Email = dto.Email,
-                Role = new List<string> { "admin" },
+              //  ExpireOn = jwttoken.ValidTo,
                 IsAuthanticated = true,
-                Token=new JwtSecurityTokenHandler().WriteToken(jwt),
+                Role= new List<string>() { role.ToString() },
+                Token = new JwtSecurityTokenHandler().WriteToken(jwttoken)
+
             };
         }
 
+
+
+        public async Task Logout()
+        {
+            await signInManager.SignOutAsync();
+        }
         private RefreshToken GenerateRefreshToken()
         {
             var reandomNumber = new byte[32];
@@ -307,6 +361,33 @@ namespace Ts3era.Services.AuthServices
 
         }
 
-       
+        public async Task<bool> EditProfile(string userid, EditUserProfileDto dto)
+        {
+           var user =await userManager.Users.FirstOrDefaultAsync(c=>c.Id==userid);
+            if (user == null)
+                return false;
+
+            user.FirstName= dto.FirstName;
+            user.LastName= dto.LastName;
+            user.Email= dto.Email;
+            user.UserName = dto.UsreName;
+            user.PhoneNumber = dto.PhoneNumber;
+            user.National_Id = dto.National_Id;
+            var hashpassword = userManager.PasswordHasher.HashPassword(user, dto.Password);
+            user.PasswordHash = hashpassword;
+
+            await userManager.ChangePasswordAsync(user, user.PasswordHash,hashpassword);
+            await userManager.UpdateAsync(user);
+            return true;
+
+
+
+        }
+
+        public async Task<int> GetCountUsers()
+        {
+            var users =await userManager.Users.CountAsync();
+            return users;  
+        }
     }
 }

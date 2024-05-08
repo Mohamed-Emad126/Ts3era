@@ -9,7 +9,9 @@ namespace Ts3era.Dto.ProductDto
         public float Price_From { get; set; }
         public float Price_To { get; set; }
         public DateTime Last_Update { get; set; } =DateTime.Now;
-        public int SubCategory_ID { get; set; } 
+        public int SubCategory_ID { get; set; }
+        public bool IsAvailable { get; set; }
+
 
     }
 }

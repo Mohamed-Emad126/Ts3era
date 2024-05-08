@@ -9,6 +9,7 @@
         public string SubCategoryName { get; set; } 
 
         public byte[]Image { get; set; }        
+        public bool IsAvailable { get; set; }   
 
     }
 }

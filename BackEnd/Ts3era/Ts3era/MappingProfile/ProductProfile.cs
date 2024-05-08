@@ -11,7 +11,6 @@ namespace Ts3era.MappingProfile
             CreateMap<Product, ProductDetailsDto>()
                 .ForMember(p => p.ProductName, d => d.MapFrom(c => c.Name))
                 .ForMember(p => p.SubCategoryName, d => d.MapFrom(c => c.SubCategory.Name));
-
             CreateMap<CreateProductDto, Product>()
                 .ForMember(c => c.Name, c => c.MapFrom(c => c.ProductName))
                 .ForMember(c => c.SubCategory_Id, c => c.MapFrom(c => c.SubCategory_ID))

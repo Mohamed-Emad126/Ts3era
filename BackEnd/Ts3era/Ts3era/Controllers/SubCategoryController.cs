@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using Ts3era.Dto.SubCategory_Dto;
@@ -79,8 +80,9 @@ namespace Ts3era.Controllers
 
             return BadRequest(ModelState);
         }
-
+        
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<CreateSubCategoryDto>>CreateSubcategory([FromForm]CreateSubCategoryDto dto)
         {
             if (ModelState.IsValid)
@@ -93,6 +95,8 @@ namespace Ts3era.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<ActionResult<UpdateSubCategoryDto>>UpdateSubCategory(int id, [FromForm]UpdateSubCategoryDto dto)
         {
             if (ModelState.IsValid)
@@ -117,6 +121,7 @@ namespace Ts3era.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult>Delete(int id)
         {
             if (ModelState.IsValid)

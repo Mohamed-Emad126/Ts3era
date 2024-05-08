@@ -1,4 +1,5 @@
 ﻿using Ts3era.Dto.AuthanticationDto;
+using Ts3era.Dto.UsersDto;
 using Ts3era.Models;
 
 namespace Ts3era.Services.AuthServices
@@ -14,5 +15,10 @@ namespace Ts3era.Services.AuthServices
         Task<Authmodel> RefreshToken(string token);
 
         Task<bool>RevokedToken(string token);
+        Task Logout();
+
+        Task<bool> EditProfile(string userid, EditUserProfileDto dto);
+
+        Task<int> GetCountUsers();
     }
 }

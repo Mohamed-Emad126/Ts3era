@@ -89,6 +89,7 @@ namespace Ts3era.Repositories.Product_Repositories
             var product = await context.Products.FirstOrDefaultAsync(c => c.Id == id);
             if (product == null)
                 throw new Exception("Not found Product ");
+            
             if (dto.Image!= null)
             {
                 if (!allowextention.Contains(Path.GetExtension(dto.Image.FileName).ToLower()))
@@ -99,6 +100,10 @@ namespace Ts3era.Repositories.Product_Repositories
                 await dto.Image.CopyToAsync(datastream);
                  product.Image=datastream.ToArray() ;
             }
+
+            
+            product.IsAvailable = dto.IsAvailable;
+           
             product.Name = dto.ProductName;
             product.Last_Update= dto.Last_Update;
             product.Price_From = dto.Price_From;
@@ -139,6 +144,12 @@ namespace Ts3era.Repositories.Product_Repositories
                 context.Products.Remove(product);
                 context.SaveChanges();
             }
+        }
+
+        public async Task<int> GetCountProduct()
+        {
+            var count = await context.Products.CountAsync();
+            return count;
         }
     }
 }

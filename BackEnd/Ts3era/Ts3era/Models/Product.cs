@@ -6,10 +6,14 @@ namespace Ts3era.Models
     {          
         public float Price_From  { get; set; }
         public float Price_TO   { get; set; }
-        public DateTime Last_Update  {  get; set; }=DateTime.Now;   
+         public DateTime ?Last_Update  {  get; set; }=DateTime.Now;   
+
+      
+
         [ForeignKey(nameof(SubCategory))]
         public int SubCategory_Id { get; set; } 
         public SubCategory SubCategory { get; set; }
+        public bool IsAvailable { get; set; } = true;
 
        
 

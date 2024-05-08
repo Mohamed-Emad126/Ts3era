@@ -54,7 +54,7 @@ namespace Ts3era.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Price_From = table.Column<float>(type: "real", nullable: false),
                     Price_TO = table.Column<float>(type: "real", nullable: false),
-                    Last_Update = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Last_Update = table.Column<DateTime>(type: "datetime2", nullable: false,defaultValue:DateTime.Now),
                     SubCategory_Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Image = table.Column<byte[]>(type: "varbinary(max)", nullable: true)

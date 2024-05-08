@@ -253,6 +253,70 @@ namespace Ts3era.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("Ts3era.Models.Complaints", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Attachment")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Details")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("National_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Complaints");
+                });
+
+            modelBuilder.Entity("Ts3era.Models.FavoriteProductUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("productId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("productId");
+
+                    b.ToTable("FavoriteProducts");
+                });
+
             modelBuilder.Entity("Ts3era.Models.Governorates", b =>
                 {
                     b.Property<int>("Id")
@@ -325,7 +389,10 @@ namespace Ts3era.Migrations
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<DateTime>("Last_Update")
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Last_Update")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -461,6 +528,25 @@ namespace Ts3era.Migrations
                     b.Navigation("RefreshTokens");
                 });
 
+            modelBuilder.Entity("Ts3era.Models.FavoriteProductUser", b =>
+                {
+                    b.HasOne("Ts3era.Models.ApplicationUser", "User")
+                        .WithMany("FavoriteProducts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ts3era.Models.Product", "product")
+                        .WithMany()
+                        .HasForeignKey("productId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+
+                    b.Navigation("product");
+                });
+
             modelBuilder.Entity("Ts3era.Models.Ports", b =>
                 {
                     b.HasOne("Ts3era.Models.Governorates", "Governorates")
@@ -500,6 +586,11 @@ namespace Ts3era.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Ts3era.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("FavoriteProducts");
                 });
 
             modelBuilder.Entity("Ts3era.Models.Category", b =>

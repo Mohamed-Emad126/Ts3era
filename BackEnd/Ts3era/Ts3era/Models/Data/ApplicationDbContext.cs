@@ -24,6 +24,9 @@ namespace Ts3era.Models.Data
         public DbSet<Governorates> Governorates { get; set;}
         public DbSet<Ports> Ports { get; set; }
         public DbSet<PortTypes> PortTypes { get; set; } 
+        public DbSet<Complaints> Complaints { get; set; }
+        public DbSet<FavoriteProductUser> FavoriteProducts { get; set;}
+  
     }
 
 }

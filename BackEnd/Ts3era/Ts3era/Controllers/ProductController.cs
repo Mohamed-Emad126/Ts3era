@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Ts3era.Dto.ProductDto;
 using Ts3era.Repositories.Product_Repositories;
@@ -86,7 +87,21 @@ namespace Ts3era.Controllers
         }
 
 
+
+        [HttpGet]
+        public async Task<ActionResult> GetCountProduct()
+        {
+            if (ModelState.IsValid)
+            {
+                var count =await repository.GetCountProduct();
+                return Ok(count);
+            }
+            return BadRequest(ModelState);
+        }
+
+
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<CreateProductDto>> CreateProduct([FromForm]CreateProductDto dto)
         {
             if (ModelState.IsValid)
@@ -100,6 +115,7 @@ namespace Ts3era.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<UpdateProductDto>>UpdateProduct(int id , [FromForm]UpdateProductDto dto)
         {
             if (ModelState.IsValid)
@@ -111,6 +127,7 @@ namespace Ts3era.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult>delete (int id)
         {
             if (ModelState.IsValid)
@@ -123,6 +140,8 @@ namespace Ts3era.Controllers
             }
             return BadRequest("Invalid Product ");
         }
+
+        
       
     }
 }

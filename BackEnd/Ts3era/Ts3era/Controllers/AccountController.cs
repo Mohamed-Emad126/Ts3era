@@ -1,16 +1,19 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Asn1.UA;
 using Ts3era.Dto.AuthanticationDto;
 using Ts3era.Dto.EmailsDto;
+using Ts3era.Dto.UsersDto;
+using Ts3era.HandleResponseApi;
 using Ts3era.Models;
 using Ts3era.Services.AuthServices;
 using Ts3era.Services.EmailServices;
 
 namespace Ts3era.Controllers
 {
-    //hgnbvnbbvvn
+
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -163,6 +166,7 @@ namespace Ts3era.Controllers
 
 
         [HttpPost]
+       // [Authorize]
         public async Task<IActionResult> ChangePassword([FromForm] ChangePasswordDto changePasswordDto)
         {
             if (ModelState.IsValid)
@@ -177,7 +181,8 @@ namespace Ts3era.Controllers
 
         }
 
-        [HttpGet]
+        [HttpPost]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> AddUserToRole(AddRoleToUser dto)
         {
             if (ModelState.IsValid)
@@ -225,13 +230,27 @@ namespace Ts3era.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<AddAdminDto>>AddAdmin(AddAdminDto dto)
+        [Authorize(Roles ="Admin")]
+        public async Task<IActionResult>AddAdmin(AddAdminDto dto)
         {
             if (ModelState.IsValid)
             {
                 var admin = await authServices.AddAdmin(dto);
                 return Ok(admin);
 
+            }
+            return BadRequest(ModelState);
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult<string>>Logout()
+        {
+            if (ModelState.IsValid)
+            {
+                await authServices.Logout();
+                return StatusCode(200,new {Message = "You have already been logged out!" });
             }
             return BadRequest(ModelState);
         }
@@ -246,5 +265,32 @@ namespace Ts3era.Controllers
 
 
         }
+
+
+        [HttpPut]
+        [Authorize]
+        public async Task<ActionResult>EditProfiel(string userid, [FromBody]EditUserProfileDto dto)
+        {
+            if (ModelState.IsValid)
+            {
+                var user =await authServices.EditProfile(userid, dto);
+                return Ok(user);
+
+            }
+            return BadRequest (ModelState);
+        }
+
+        [HttpGet]
+        [Authorize("Admin")]
+        public async Task<ActionResult>GetCountUsers()
+        {
+            if (ModelState.IsValid)
+            {
+                var users = await authServices.GetCountUsers();
+                return Ok(users);
+            }
+            return BadRequest(ModelState);  
+        }
+        
     }
 }

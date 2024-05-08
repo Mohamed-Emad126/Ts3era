@@ -1,4 +1,5 @@
 ﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,8 +26,6 @@ namespace Ts3era.Controllers
         }
 
         [HttpGet]
-       // [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-       // [ProducesResponseType(typeof(List<CategoryDetailsDto>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<CategoryDetailsDto>>>GetAll()
         {
             if (ModelState.IsValid)
@@ -68,8 +67,20 @@ namespace Ts3era.Controllers
             return BadRequest(ModelState);  
         }
 
+        [HttpGet]
+        public async Task<ActionResult> GetCountCategory()
+        {
+            if (ModelState.IsValid)
+            {
+                var category = await repo.GetCountCategory();
+                return Ok(category);
+
+            }
+            return BadRequest(ModelState);  
+        }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<CreateCategoryDto>>CreateCategory([FromForm]CreateCategoryDto dto)
         {
             if (ModelState.IsValid)
@@ -81,6 +92,7 @@ namespace Ts3era.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<UpdateCategoryDto>>UpdateCategory(int id ,[FromForm]UpdateCategoryDto dto)
         {
             if (ModelState.IsValid)
@@ -115,7 +127,10 @@ namespace Ts3era.Controllers
             return BadRequest(ModelState);
         }
 
+        
+
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult>Delete (int id)
         {
             if (ModelState.IsValid)

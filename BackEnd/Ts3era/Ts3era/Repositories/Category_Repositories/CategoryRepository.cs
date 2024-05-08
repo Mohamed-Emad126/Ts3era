@@ -10,7 +10,7 @@ using Ts3era.Models.Data;
 
 namespace Ts3era.Repositories.Category_Repositories
 {
-    public class CategoryRepository :ICategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
@@ -144,6 +144,14 @@ namespace Ts3era.Repositories.Category_Repositories
             
             return isvalid;
         }
+
+        public async Task<int> GetCountCategory()
+        {
+            var count =await context.Categories.CountAsync();
+            return count;
+        }
+
+
 
         #region oldDelete 
         //public async Task Delete(int id)
