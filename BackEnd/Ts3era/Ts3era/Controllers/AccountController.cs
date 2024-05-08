@@ -62,6 +62,7 @@ namespace Ts3era.Controllers
 
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<RegisterDto>> Register([FromBody]RegisterDto model)
         {
             if (ModelState.IsValid)
@@ -76,6 +77,7 @@ namespace Ts3era.Controllers
             return BadRequest(ModelState);
         }
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<LoginDto>>Login([FromBody]LoginDto model)
         {
             if (ModelState.IsValid)
@@ -92,6 +94,7 @@ namespace Ts3era.Controllers
 
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> ForgetPassword(ForgetPasswordDto dto)
         {
             if (ModelState.IsValid)
@@ -127,6 +130,7 @@ namespace Ts3era.Controllers
 
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> ResetPassword(string token, string email)
         {
             if (ModelState.IsValid)
@@ -139,6 +143,7 @@ namespace Ts3era.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> ResetPassord([FromForm] ResetPasswordDto dto)
         {
             if (ModelState.IsValid)
@@ -166,7 +171,7 @@ namespace Ts3era.Controllers
 
 
         [HttpPost]
-       // [Authorize]
+        [Authorize]
         public async Task<IActionResult> ChangePassword([FromForm] ChangePasswordDto changePasswordDto)
         {
             if (ModelState.IsValid)

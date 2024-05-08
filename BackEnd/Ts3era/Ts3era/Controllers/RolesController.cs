@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,18 +20,21 @@ namespace Ts3era.Controllers
         private readonly IRoleServices services;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IMapper mapper;
 
         public RolesController(
             RoleManager<IdentityRole>signInManager ,
             IRoleServices services,
             RoleManager<IdentityRole> roleManager,
-            UserManager<ApplicationUser> userManager
+            UserManager<ApplicationUser> userManager,
+            IMapper mapper
             )
         {
             this.signInManager = signInManager;
             this.services = services;
             this.roleManager = roleManager;
             this.userManager = userManager;
+            this.mapper = mapper;
         }
         [HttpPost]
         public async Task<IActionResult>AddNewRole(AddRoleDto dto)
@@ -99,22 +103,25 @@ namespace Ts3era.Controllers
                 if (role is null )
                     return BadRequest();
 
-                var users =  new List<UserInRoleDto>();
+                var user =await userManager.Users.ToListAsync();
+                var usersinrole =  new List<UserInRoleDto>();
+                var map =mapper.Map<List<UserInRoleDto>>(user);
 
-                foreach (var user in await userManager.Users.ToListAsync())
+
+                foreach (var item in await userManager.Users.ToListAsync())
                 {
                     var userinrole = new UserInRoleDto
                     {
-                        UserId = user.Id,
-                        UserName = user.UserName
+                        UserId = item.Id,
+                        UserName = item.UserName
                     };
-                    if (await userManager.IsInRoleAsync(user,roleid))
+                    if (await userManager.IsInRoleAsync(item,role.Name))
                         userinrole.Is_Selected = true;
 
                     else userinrole.Is_Selected= false;
-                    users.Add(userinrole);
+                    map.Add(userinrole);
 
-                    return Ok(users);
+                    return Ok(map);
                 }
 
 

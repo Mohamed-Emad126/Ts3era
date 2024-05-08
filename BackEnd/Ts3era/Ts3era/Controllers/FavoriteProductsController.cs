@@ -10,6 +10,7 @@ namespace Ts3era.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class FavoriteProductsController : ControllerBase
     {
         private readonly IFavoriteServies favoriteServies;
@@ -21,6 +22,7 @@ namespace Ts3era.Controllers
 
 
         [HttpGet]
+        
    
         public async Task<ActionResult<IEnumerable<DetailsFavProductDto>>> GetAllFavoriteProduct(string userid)
         {
