@@ -26,6 +26,7 @@ namespace Ts3era.Models.Data
         public DbSet<PortTypes> PortTypes { get; set; } 
         public DbSet<Complaints> Complaints { get; set; }
         public DbSet<FavoriteProductUser> FavoriteProducts { get; set;}
+        public DbSet<FeedBack>feedBacks { get; set; }
   
     }
 

@@ -15,6 +15,7 @@ using Ts3era.Models.Data;
 using Ts3era.Repositories.Category_Repositories;
 using Ts3era.Repositories.Complaint_Repositories;
 using Ts3era.Repositories.FavProductServices;
+using Ts3era.Repositories.FeedBack_Repository;
 using Ts3era.Repositories.Governoreate_Repositories;
 using Ts3era.Repositories.Port_Repositories;
 using Ts3era.Repositories.Port_TypeRepositories;
@@ -148,6 +149,7 @@ builder.Services.AddTransient<IPortType_Repositort, PortType_Repository>();
 
 
 builder.Services.AddTransient<IFavoriteServies, FavoriteServies>(); 
+builder.Services.AddTransient<IFeedBackRepository, FeedBackRepository>();
 //Automapper 
 builder.Services.AddAutoMapper(typeof(Program));//full project 
  
