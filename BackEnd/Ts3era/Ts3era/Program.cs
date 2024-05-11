@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Org.BouncyCastle.Pkix;
 using System.Text;
+using Ts3era;
 using Ts3era.HandleResponseApi;
 using Ts3era.Heler;
 using Ts3era.MappingProfile;
@@ -36,73 +37,73 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 #region//Add Swagger Authancated
 
-builder.Services.AddSwaggerGen(swagger =>
-{
-    swagger.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Version = "v2",
-        Title = "ASP.NET 6 Web API",
-        Description = "Ts3era"
-    });
-    swagger.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
-    {
+//builder.Services.AddSwaggerGen(swagger =>
+//{
+//    swagger.SwaggerDoc("v1", new OpenApiInfo
+//    {
+//        Version = "v2",
+//        Title = "ASP.NET 6 Web API",
+//        Description = "Ts3era"
+//    });
+//    swagger.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+//    {
 
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Description = "Enter 'Bearer' [space] and then your valid token in the text input "
+//        Name = "Authorization",
+//        Type = SecuritySchemeType.ApiKey,
+//        Scheme = "Bearer",
+//        BearerFormat = "JWT",
+//        In = ParameterLocation.Header,
+//        Description = "Enter 'Bearer' [space] and then your valid token in the text input "
 
-    });
+//    });
 
-    swagger.AddSecurityRequirement(new OpenApiSecurityRequirement
-         {
-        {
-        new OpenApiSecurityScheme
-        {
-            Reference=new OpenApiReference
-             {
-            Type=ReferenceType.SecurityScheme,
-            Id="Bearer"
-              }
-        },
-        new string[]{}
-        }
+//    swagger.AddSecurityRequirement(new OpenApiSecurityRequirement
+//         {
+//        {
+//        new OpenApiSecurityScheme
+//        {
+//            Reference=new OpenApiReference
+//             {
+//            Type=ReferenceType.SecurityScheme,
+//            Id="Bearer"
+//              }
+//        },
+//        new string[]{}
+//        }
 
-    });
+//    });
 
-});
+//});
 #endregion
 //add jwt 
 
-builder.Services.AddAuthentication(options =>
-{
+//builder.Services.AddAuthentication(options =>
+//{
 
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 
-}
-).AddJwtBearer(options =>
-{
+//}
+//).AddJwtBearer(options =>
+//{
 
-    options.SaveToken = true;
-    options.RequireHttpsMetadata = false;
-    options.TokenValidationParameters = new TokenValidationParameters()
-    {
-        ValidateIssuer = true,
-        ValidIssuer = builder.Configuration["JWT:Issure"],
-        ValidateAudience = true,
-        ValidAudience = builder.Configuration["JWT:Audiance"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:key"]))
-
-
+//    options.SaveToken = true;
+//    options.RequireHttpsMetadata = false;
+//    options.TokenValidationParameters = new TokenValidationParameters()
+//    {
+//        ValidateIssuer = true,
+//        ValidIssuer = builder.Configuration["JWT:Issure"],
+//        ValidateAudience = true,
+//        ValidAudience = builder.Configuration["JWT:Audiance"],
+//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:key"]))
 
 
-    };
 
-});
+
+//    };
+
+//});
 
 #region  AddModelErrors 
 builder.Services.Configure<ApiBehaviorOptions>(option =>
@@ -152,15 +153,15 @@ builder.Services.AddTransient<IFavoriteServies, FavoriteServies>();
 builder.Services.AddTransient<IFeedBackRepository, FeedBackRepository>();
 //Automapper 
 builder.Services.AddAutoMapper(typeof(Program));//full project 
- 
+
 
 
 
 //jwt 
-
-builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
+builder.Services.AddJWTTokenServices(builder.Configuration);
+///builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
 //identity
-builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+//builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 //Services login and Register 
 builder.Services.AddScoped<IAuthServices,AuthServices>();
 //add Email  confiquration 
@@ -175,23 +176,34 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
                 .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
 
 
-builder.Services.AddCors(corsoption =>
+builder.Services.AddCors(corsoption => 
 {
-    corsoption.AddPolicy("Mypolicy", crospolicy => crospolicy.WithOrigins("http://localhost:3000/")
-    .AllowAnyMethod()
+    corsoption.AddPolicy("Mypolicy", c =>
+    c//.SetIsOriginAllowed(isOriginAllowed: _ => true) //for all origins
     .AllowAnyOrigin()
     .AllowAnyHeader()
+    .AllowAnyMethod()
+    //.AllowCredentials()
     );
+
 });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+app.UseSwagger();
 if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseMiddleware<ExceptionMiddleWare>();
-}
+else
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+        options.RoutePrefix = string.Empty;
+    });
+
+app.UseMiddleware<ExceptionMiddleWare>();
+
 
 app.UseStaticFiles();
 app.UseCors("Mypolicy");

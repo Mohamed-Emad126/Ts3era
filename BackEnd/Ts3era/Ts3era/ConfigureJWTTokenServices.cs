@@ -52,14 +52,8 @@ namespace Ts3era
 
             services.AddSwaggerGen(options =>
             {
-                 options.SwaggerDoc("v1", new OpenApiInfo
-                   {
-                           Version = "v2",
-                           Title = "Ts3era",
-                          // Description = "Ts3era"
-                    });
-                 //options.EnableAnnotations();
-               options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                //options.EnableAnnotations();
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey,

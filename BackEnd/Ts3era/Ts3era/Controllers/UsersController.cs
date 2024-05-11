@@ -8,7 +8,7 @@ namespace Ts3era.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    //[Authorize(Roles ="Admin")]
+    [Authorize(Roles ="Admin")]
     public class UsersController : ControllerBase
     {
         private readonly IUserServices userServices;

@@ -12,7 +12,7 @@ namespace Ts3era.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-   /// [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin")]
 
     public class RolesController : ControllerBase
     {

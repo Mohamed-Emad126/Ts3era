@@ -102,6 +102,7 @@ namespace Ts3era.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles ="Admin")]
         public async Task<ActionResult>GetCountComplaint()
         {
             if (ModelState.IsValid)

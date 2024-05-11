@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Ts3era.Dto.FeedBack_Dto;
 using Ts3era.Models;
@@ -17,12 +18,14 @@ namespace Ts3era.Controllers
             this.repository = repository;
         }
         [HttpGet]
+        [Authorize(Roles ="Admin")]
         public async Task<ActionResult<List<FeedBack>>> GetAllFeedBack()
         {
             var feed =await repository.GetAllFeedback();
             return Ok(feed);
         }
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<FeedBackDto>>AddFeedBack(FeedBackDto dto)
         {
             if (ModelState.IsValid)
@@ -34,6 +37,7 @@ namespace Ts3era.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles ="Admin")]
         public async Task<ActionResult>DeleteFeedBack(int Feedbackid)
         {
            if (ModelState.IsValid)
