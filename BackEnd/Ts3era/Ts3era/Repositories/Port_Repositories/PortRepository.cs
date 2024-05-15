@@ -7,6 +7,8 @@ using Ts3era.Dto.PortType_Dto;
 using Ts3era.Dto.ProductDto;
 using Ts3era.Models;
 using Ts3era.Models.Data;
+using Ts3era.Specifications;
+using Ts3era.Specifications.PortSpecifications;
 
 namespace Ts3era.Repositories.Port_Repositories
 {
@@ -122,6 +124,32 @@ namespace Ts3era.Repositories.Port_Repositories
 
         }
 
+        public   async Task<List<Ports>> GetAllPorts(ISpecification<Ports> specification)
+            => await Apply(specification).ToListAsync();
+        public   async Task<Ports> GetPortById(ISpecification<Ports> specification)
+         => await Apply(specification).FirstOrDefaultAsync();
 
+        public async Task<List<PortsDetailsDto>> GetAllPortSpecs(PortSpecification specification)
+        {
+            var specs = new PortWithGovernorateandPortType(specification);
+            var port = await  GetAllPorts(specs);
+            var Portmap =mapper.Map<List<PortsDetailsDto>>(port);
+            return Portmap;
+        }
+        public async Task<PortsDetailsDto> GetPortspecs(int id)
+        {
+
+            var specs = new PortWithGovernorateandPortType(id);
+            var port =await GetPortById(specs);
+            var portmap =mapper.Map<PortsDetailsDto>(port);
+            return portmap;
+            
+        }
+
+        private IQueryable<Ports> Apply(ISpecification<Ports> specification)
+            =>EvaluationSpecification<Ports>.GetQuery(context.Ports.AsQueryable(), specification);
+
+     
+       
     }
 }

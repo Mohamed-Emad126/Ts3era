@@ -7,6 +7,7 @@ using Ts3era.Dto.PortType_Dto;
 using Ts3era.Repositories.Governoreate_Repositories;
 using Ts3era.Repositories.Port_Repositories;
 using Ts3era.Repositories.Port_TypeRepositories;
+using Ts3era.Specifications.PortSpecifications;
 
 namespace Ts3era.Controllers
 {
@@ -25,29 +26,34 @@ namespace Ts3era.Controllers
             this.portType_Repositort = portType_Repositort;
         }
 
-
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PortsDetailsDto>>> GetAllPorts()
+        public async Task<ActionResult<IEnumerable<PortsDetailsDto>>> GetAllPorts([FromQuery] PortSpecification specification)
         {
+
             if (ModelState.IsValid)
             {
-                var ports = await portRepository.GetAll();
-                return Ok(ports);
-            }
-            return BadRequest();
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<PortsDetailsDto>> GetPortById(int id)
-        {
-            if (ModelState.IsValid)
-            {
-                var port = await portRepository.GetById(id);
-                if (port == null)
-                    return StatusCode(StatusCodes.Status404NotFound,
-                        new { Message = "Invalid Port" });
+                var port = await portRepository.GetAllPortSpecs(specification);
                 return Ok(port);
 
+            }
+            return BadRequest(ModelState);
+        }
+
+     
+        
+
+        [HttpGet("{id:int}")]
+        public async  Task<ActionResult<PortsDetailsDto>>GetPortById (int id)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var port=await portRepository.GetPortspecs(id);
+                if (port == null)
+                    return StatusCode(StatusCodes.Status404NotFound,
+                        new { Message = "Port Not Found !" });
+
+                return Ok(port);
             }
             return BadRequest(ModelState);
         }
@@ -92,38 +98,7 @@ namespace Ts3era.Controllers
 
       
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<PortsDetailsDto>>> GetPortWithPortType(int? TypeId)
-        {
-            if (ModelState.IsValid)
-            {
-                if (TypeId == null)
-                    return await portRepository.GetAll();
-
-                var porttype = await portRepository.GetPortsWithPortType(TypeId);
-                return Ok(porttype);
-            }
-            return BadRequest(ModelState);
-
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<PortsDetailsDto>>> GetPortWithGovernorate(int? governorateId)
-        {
-
-            if (ModelState.IsValid)
-            {
-                if (governorateId == null)
-                    return await portRepository.GetAll();
-
-                var port = await portRepository.getPortsWithGovernorateDtos(governorateId);
-                return Ok(port);
-
-
-            }
-            return BadRequest(ModelState);
-        }
-
+    
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PortType_Dto>>> GetAllPortTypes()
@@ -196,6 +171,8 @@ namespace Ts3era.Controllers
         }
 
 
+
+    
        
     }
 }
