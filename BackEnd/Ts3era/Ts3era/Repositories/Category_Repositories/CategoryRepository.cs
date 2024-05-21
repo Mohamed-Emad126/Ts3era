@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using Ts3era.Dto.Category_Dto;
@@ -15,6 +16,7 @@ namespace Ts3era.Repositories.Category_Repositories
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
         private readonly ILogger<CategoryRepository> logger;
+        private readonly IWebHostEnvironment webHost;
         private new List<string> allowextention = new List<string>() { ".jpg", ".png" };
         private long maxsizeimage = 109951163;//2MB
 
@@ -23,12 +25,14 @@ namespace Ts3era.Repositories.Category_Repositories
             (
             ApplicationDbContext context,
             IMapper mapper,
-            ILogger<CategoryRepository>logger
+            ILogger<CategoryRepository>logger,
+            IWebHostEnvironment webHost
             )
         {
             this.context = context;
             this.mapper = mapper;
             this.logger = logger;
+            this.webHost = webHost;
         }
 
     
@@ -69,14 +73,28 @@ namespace Ts3era.Repositories.Category_Repositories
             if (dto.Image.Length > maxsizeimage)
                 throw new Exception("Max Allowed image is 2MB");
 
-            using var datastream = new MemoryStream();
-            await dto.Image.CopyToAsync(datastream);
+            var uploadfile =Path.Combine(webHost.WebRootPath,"Images/Category");
+            var uniquefile =Guid.NewGuid().ToString() + "_" + dto.Image.FileName;
+            var path=Path.Combine(uploadfile,uniquefile);
+            using var stream = new  FileStream(path, FileMode.Create);
             var category = mapper.Map<Category>(dto);
-            category.Image=datastream.ToArray();
+            dto.Image.CopyTo(stream);
+            stream.Close();
+            category.Image="Images/Category/" + uniquefile.ToString();
             await context.Categories.AddAsync(category);
             await context.SaveChangesAsync();
             return dto;
-            
+
+
+
+            /*  using var datastream = new MemoryStream();
+              await dto.Image.CopyToAsync(datastream);
+              var category = mapper.Map<Category>(dto);
+             // category.Image=datastream.ToArray();
+              await context.Categories.AddAsync(category);
+              await context.SaveChangesAsync();
+              return dto;*/
+
         }
 
         public async Task<string> Update(int id, UpdateCategoryDto dto)
@@ -94,9 +112,16 @@ namespace Ts3era.Repositories.Category_Repositories
                 if (dto.Image.Length > maxsizeimage)
                     throw new Exception("Max Allowed image is 2MB");
 
-                using var datastream = new MemoryStream();
-                await dto.Image.CopyToAsync (datastream);
-                category.Image = datastream.ToArray();
+                var uploadfile = Path.Combine(webHost.WebRootPath, "Images/Category");
+                var uniquefile = Guid.NewGuid().ToString() + "_" + dto.Image.FileName;
+                var path = Path.Combine(uploadfile, uniquefile);
+                using var stream = new FileStream(path, FileMode.Create);
+                dto.Image.CopyTo(stream);
+                stream.Close();
+                category.Image = "Images/Category/" + uniquefile.ToString();
+                /*  using var datastream = new MemoryStream();
+                  await dto.Image.CopyToAsync (datastream);*/
+                /* category.Image = datastream.ToArray();*/
             }
             category.Name = dto.CategoryName;
             

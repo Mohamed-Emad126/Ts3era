@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using System.Security.Cryptography.Xml;
 using Ts3era.Dto.SubCategory_Dto;
 using Ts3era.Models;
@@ -14,19 +15,22 @@ namespace Ts3era.Repositories.SubCategory_Repositories
         private readonly IMapper mapper;
         private readonly ICategoryRepository categoryRepository;
         private readonly ILogger<SubCategoryRepository> logger;
+        private readonly IWebHostEnvironment webHost;
         private new List<string> allowextention = new List<string>() { ".jpg", ".png" };
         private long maxsizeimage = 109951163;//2MB
         public SubCategoryRepository(
             ApplicationDbContext context,
             IMapper mapper,
             ICategoryRepository categoryRepository,
-            ILogger<SubCategoryRepository> logger
+            ILogger<SubCategoryRepository> logger,
+            IWebHostEnvironment  webHost
             )
         {
             this.context = context;
             this.mapper = mapper;
             this.categoryRepository = categoryRepository;
             this.logger = logger;
+            this.webHost = webHost;
         }
 
 
@@ -84,14 +88,31 @@ namespace Ts3era.Repositories.SubCategory_Repositories
             if (!isvalid)
                 throw new Exception("Ivalid Categgory ID ");
 
-            using var datastream = new MemoryStream();
-            await dto.Image.CopyToAsync(datastream);
+
+
+            var uploadfile = Path.Combine(webHost.WebRootPath, "Images/SubCategory");
+            var uniquefile =Guid.NewGuid().ToString() + "_" + dto.Image.FileName;
+            var pathfile =Path.Combine(uploadfile, uniquefile);
+
+            using var stream = new FileStream(pathfile, FileMode.Create);
             var subcategory = mapper.Map<SubCategory>(dto);
-            subcategory.Image = datastream.ToArray();
+            dto.Image.CopyTo(stream);
+            stream.Close();
+            subcategory.Image= "Images/SubCategory/" +uniquefile.ToString();
             await context.SubCategories.AddAsync(subcategory);
             await context.SaveChangesAsync();
             return dto;
-           
+
+
+
+            /*using var datastream = new MemoryStream();
+            await dto.Image.CopyToAsync(datastream);
+            var subcategory = mapper.Map<SubCategory>(dto);
+           // subcategory.Image = datastream.ToArray();
+            await context.SubCategories.AddAsync(subcategory);
+            await context.SaveChangesAsync();
+            return dto;*/
+
 
 
 
@@ -111,9 +132,18 @@ namespace Ts3era.Repositories.SubCategory_Repositories
                 if (dto.Image.Length > maxsizeimage)
                     throw new Exception("Max  Allawed Image 2MB");
 
-                using var datastream = new MemoryStream();
-                await dto.Image.CopyToAsync(datastream);
-                subcategory.Image= datastream.ToArray();
+
+                var uploadfile = Path.Combine(webHost.WebRootPath, "Images/SubCategory");
+                var uniquefile = Guid.NewGuid().ToString() + "_" + dto.Image.FileName;
+                var pathfile = Path.Combine(uploadfile, uniquefile);
+
+                using var stream = new FileStream(pathfile, FileMode.Create);
+                dto.Image.CopyTo(stream);
+                stream.Close();
+                subcategory.Image = "Images/SubCategory/" + uniquefile.ToString();
+                /*  using var datastream = new MemoryStream();
+                  await dto.Image.CopyToAsync(datastream);
+                 // subcategory.Image= datastream.ToArray();*/
 
             }
 

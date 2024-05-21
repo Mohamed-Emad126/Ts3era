@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Ts3era.Dto.ProductDto;
+using Ts3era.ImageResolver;
 using Ts3era.Models;
 
 namespace Ts3era.MappingProfile
@@ -10,7 +11,9 @@ namespace Ts3era.MappingProfile
         {
             CreateMap<Product, ProductDetailsDto>()
                 .ForMember(p => p.ProductName, d => d.MapFrom(c => c.Name))
-                .ForMember(p => p.SubCategoryName, d => d.MapFrom(c => c.SubCategory.Name));
+                .ForMember(p => p.SubCategoryName, d => d.MapFrom(c => c.SubCategory.Name))
+                .ForMember(p=>p.Image,d=>d.MapFrom<ProductImageResolver>());
+
             CreateMap<CreateProductDto, Product>()
                 .ForMember(c => c.Name, c => c.MapFrom(c => c.ProductName))
                 .ForMember(c => c.SubCategory_Id, c => c.MapFrom(c => c.SubCategory_ID))

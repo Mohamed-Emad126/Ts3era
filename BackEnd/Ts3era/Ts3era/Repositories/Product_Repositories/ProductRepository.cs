@@ -13,6 +13,7 @@ namespace Ts3era.Repositories.Product_Repositories
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
         private readonly ISubCategoryRepository subCategoryRepository;
+        private readonly IWebHostEnvironment webHost;
         private new List<string> allowextention = new List<string>() { ".jpg", ".png" };
         private long maxsizeimage = 109951163;//2MB
 
@@ -20,12 +21,14 @@ namespace Ts3era.Repositories.Product_Repositories
             (
             ApplicationDbContext context,
             IMapper mapper,
-            ISubCategoryRepository subCategoryRepository
+            ISubCategoryRepository subCategoryRepository,
+            IWebHostEnvironment webHost
             )
         {
             this.context = context;
             this.mapper = mapper;
             this.subCategoryRepository = subCategoryRepository;
+            this.webHost = webHost;
         }
 
        
@@ -72,14 +75,28 @@ namespace Ts3era.Repositories.Product_Repositories
             if (!isvalid)
                 throw new Exception("Invalid SubCategory Id");
 
-            using var datastream =new MemoryStream();
-            await  dto.Image.CopyToAsync(datastream);
-            var product = mapper.Map<Product>(dto);
-            product.Image=datastream.ToArray();
 
+            var uploadfile = Path.Combine(webHost.WebRootPath, "Images/Product");
+            var uniquefile=Guid.NewGuid().ToString() + "_" + dto.Image.FileName;
+            var pathfile = Path.Combine(uploadfile, uniquefile);
+
+            using var stream =new FileStream(pathfile,FileMode.Create);
+            var product =mapper.Map<Product>(dto);
+            dto.Image.CopyTo(stream);
+            stream.Close();
+            product.Image="Images/Product/" + uniquefile.ToString();
+            
             await context.AddAsync(product);
             await context.SaveChangesAsync();
             return dto;
+
+
+         /*   using var datastream =new MemoryStream();
+            await  dto.Image.CopyToAsync(datastream);
+            var product = mapper.Map<Product>(dto);
+          //  product.Image=datastream.ToArray();*/
+
+          
             
             
         }
@@ -96,9 +113,20 @@ namespace Ts3era.Repositories.Product_Repositories
                     throw new Exception("Must be Allawed .png or .jpg");
                 if (dto.Image.Length > maxsizeimage)
                     throw new Exception("Max Allawed Image Size 2MB ");
-                using var datastream =new MemoryStream();
-                await dto.Image.CopyToAsync(datastream);
-                 product.Image=datastream.ToArray() ;
+
+
+                var uploadfile = Path.Combine(webHost.WebRootPath, "Images/Product");
+                var uniquefile = Guid.NewGuid().ToString() + "_" + dto.Image.FileName;
+                var pathfile = Path.Combine(uploadfile, uniquefile);
+
+                using var stream = new FileStream(pathfile, FileMode.Create);
+                dto.Image.CopyTo(stream);
+                stream.Close();
+                product.Image = "Images/Product/" + uniquefile.ToString();
+
+                /* using var datastream =new MemoryStream();
+                 await dto.Image.CopyToAsync(datastream);
+                //  product.Image=datastream.ToArray() ;*/
             }
 
             

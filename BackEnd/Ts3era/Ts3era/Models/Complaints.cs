@@ -10,7 +10,7 @@
         public string Phone { get; set; }   
         public string Details { get; set; }
 
-        public byte[]? Attachment {  get; set; }
+        public string ? Attachment {  get; set; }
 
     }
 }

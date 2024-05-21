@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.JSInterop;
 using Ts3era.Dto.Category_Dto.Category_Dto;
+using Ts3era.ImageResolver;
 using Ts3era.Models;
 
 namespace Ts3era.MappingProfile
@@ -14,6 +15,7 @@ namespace Ts3era.MappingProfile
                 .ForMember(c=>c.CategoryName,x=>x.MapFrom(c=>c.Name))
                 .ForMember(c => c.SubCategoriesNames,
                 c => c.MapFrom(x => x.subCategories.Select(x => x.Name).ToList()))
+                .ForMember(c=>c.Image,c=>c.MapFrom<CatgoryImageResolver>())
                 .ReverseMap();
 
             CreateMap<CreateCategoryDto, Category>()

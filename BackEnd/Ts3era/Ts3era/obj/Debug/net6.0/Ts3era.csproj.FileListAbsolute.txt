@@ -194,3 +194,4 @@ D:\Ts3era\BackEnd\Ts3era\Ts3era\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.
 D:\Ts3era\BackEnd\Ts3era\Ts3era\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Text.Encoding.CodePages.dll
 D:\Ts3era\BackEnd\Ts3era\Ts3era\bin\Debug\net6.0\AutoMapper.dll
 D:\Ts3era\BackEnd\Ts3era\Ts3era\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Ts3era\BackEnd\Ts3era\Ts3era\bin\Debug\net6.0\Ts3era.staticwebassets.runtime.json

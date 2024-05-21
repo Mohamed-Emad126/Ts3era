@@ -27,7 +27,7 @@ namespace Ts3era.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ComplaintDto>>> GetAllComplaints()
+        public async Task<ActionResult<IEnumerable<ComplaintDetailsDto>>> GetAllComplaints()
         {
             if (ModelState.IsValid)
             {
@@ -40,7 +40,7 @@ namespace Ts3era.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public async Task<ActionResult<ComplaintDto>>GetCmplaintById(int id)
+        public async Task<ActionResult<ComplaintDetailsDto>>GetCmplaintById(int id)
         {
             if (ModelState.IsValid)
             {

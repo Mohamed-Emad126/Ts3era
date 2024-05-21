@@ -12,29 +12,35 @@ namespace Ts3era.Repositories.Complaint_Repositories
     {
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
-
+        private readonly IWebHostEnvironment webHost;
         private readonly long MaxSize = 1048576;
         private new List<string> allawextentoin= new List<string>() { ".png", ".jpg" };
 
-        public ComplaintRepository(ApplicationDbContext context,IMapper mapper)
+        public ComplaintRepository(
+            ApplicationDbContext context,
+            IMapper mapper,
+            IWebHostEnvironment webHost
+            
+            )
         {
             this.context = context;
             this.mapper = mapper;
+            this.webHost = webHost;
         }
 
       
 
-        public async Task<List<ComplaintDto>> GetAll()
+        public async Task<List<ComplaintDetailsDto>> GetAll()
         {
             var complaint =await context.Complaints.ToListAsync();
-            var map =mapper.Map<List<ComplaintDto>>(complaint); 
+            var map =mapper.Map<List<ComplaintDetailsDto>>(complaint); 
             return map;
         }
 
-        public async  Task<ComplaintDto> GetById(int id)
+        public async  Task<ComplaintDetailsDto> GetById(int id)
         {
             var complaint = await context.Complaints.FirstOrDefaultAsync(c=>c.Id==id);
-            var map = mapper.Map<ComplaintDto>(complaint);
+            var map = mapper.Map<ComplaintDetailsDto>(complaint);
             return map;
         }  
         
@@ -44,14 +50,29 @@ namespace Ts3era.Repositories.Complaint_Repositories
                 throw new ArgumentException("Only .png and jpg images are allowed !");
             if (complaintdto.AddAtachment.Length > MaxSize)
                 throw new ArgumentException(" Max Allowed file! ");
-           using  var datastrem =new MemoryStream();
-            await complaintdto.AddAtachment.CopyToAsync(datastrem);
 
-            var map = mapper.Map<Complaints>(complaintdto);
-            map.Attachment=datastrem.ToArray();
-            context.Complaints.Add(map);
+
+            var uploadfile = Path.Combine(webHost.WebRootPath, "Images/Complaint");
+            var uniquefile = Guid.NewGuid().ToString() + "_" + complaintdto.AddAtachment.FileName;
+            var pathfile = Path.Combine(uploadfile, uniquefile);
+            using var stream = new  FileStream(pathfile, FileMode.Create);
+
+            var complaint = mapper.Map<Complaints>(complaintdto);
+            complaintdto.AddAtachment.CopyTo(stream);
+            stream.Close();
+            complaint.Attachment = "Images/Complaint/" + uniquefile.ToString();
+            context.Complaints.Add(complaint);
             context.SaveChanges();
             return complaintdto;
+
+            /* using  var datastrem =new MemoryStream();
+              await complaintdto.AddAtachment.CopyToAsync(datastrem);
+
+              var map = mapper.Map<Complaints>(complaintdto);
+            //  map.Attachment=datastrem.ToArray();
+              context.Complaints.Add(map);
+              context.SaveChanges();
+              return complaintdto;*/
         }
 
         public async Task Delete(int id)
