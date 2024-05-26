@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Asn1.UA;
+using System.Security.Claims;
 using Ts3era.Dto.AuthanticationDto;
 using Ts3era.Dto.EmailsDto;
 using Ts3era.Dto.UsersDto;
@@ -14,7 +15,7 @@ using Ts3era.Services.EmailServices;
 namespace Ts3era.Controllers
 {
 
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]/[action]")] 
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -48,7 +49,7 @@ namespace Ts3era.Controllers
         //        user.PasswordHash = model.Password;
 
         //    var result = await userManager.CreateAsync(user,model.Password);
-                
+
         //        if (result.Succeeded)
         //        {
         //            return Ok("Account Add");
@@ -56,9 +57,20 @@ namespace Ts3era.Controllers
         //        return BadRequest(result.Errors.FirstOrDefault());
         //    }
         //    return BadRequest(ModelState);
-            
+
         //}
         #endregion
+
+       
+
+        
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<DisplayUserProfile>> GetCurrentUser2()
+        {
+            var user = await authServices.GetCurrentUser();
+            return Ok( user );
+        }
 
 
         [HttpPost]

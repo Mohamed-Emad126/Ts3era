@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "keSf0MHA5M02Da1LDaOIv9wOPPuDMau69CMySzAnoaU=",
+  "Hash": "1jX6Ui7jrzi0XFOHrrMSm7nAdk0JVbt7vsTu/uWIF/A=",
   "Source": "Ts3era",
   "BasePath": "_content/Ts3era",
   "Mode": "Default",
@@ -66,6 +66,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\Category\\d28406f6-a178-46da-be86-2f44f8399705_Screenshot 2023-11-25 142030.png"
+    },
+    {
+      "Identity": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\Images\\Complaint\\af27056b-3325-463f-84b7-794546202a05_lovepik-fresh-beef-picture_501544269.jpg",
+      "SourceId": "Ts3era",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\",
+      "BasePath": "_content/Ts3era",
+      "RelativePath": "Images/Complaint/af27056b-3325-463f-84b7-794546202a05_lovepik-fresh-beef-picture_501544269.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\Complaint\\af27056b-3325-463f-84b7-794546202a05_lovepik-fresh-beef-picture_501544269.jpg"
+    },
+    {
+      "Identity": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\Images\\Product\\236a7959-d70d-4c93-9862-382d49f28e22_png-clipart-rice-meter-rice.png",
+      "SourceId": "Ts3era",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\",
+      "BasePath": "_content/Ts3era",
+      "RelativePath": "Images/Product/236a7959-d70d-4c93-9862-382d49f28e22_png-clipart-rice-meter-rice.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\Product\\236a7959-d70d-4c93-9862-382d49f28e22_png-clipart-rice-meter-rice.png"
     },
     {
       "Identity": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\Images\\Product\\55323dae-6ed9-4a39-87d2-3e97d623f75b_lovepik-fresh-beef-picture_501544269.jpg",

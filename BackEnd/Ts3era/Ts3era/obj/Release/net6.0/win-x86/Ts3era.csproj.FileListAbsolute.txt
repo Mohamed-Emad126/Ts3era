@@ -87,3 +87,4 @@ D:\Ts3era\BackEnd\Ts3era\Ts3era\obj\Release\net6.0\win-x86\refint\Ts3era.dll
 D:\Ts3era\BackEnd\Ts3era\Ts3era\obj\Release\net6.0\win-x86\Ts3era.pdb
 D:\Ts3era\BackEnd\Ts3era\Ts3era\obj\Release\net6.0\win-x86\Ts3era.genruntimeconfig.cache
 D:\Ts3era\BackEnd\Ts3era\Ts3era\obj\Release\net6.0\win-x86\ref\Ts3era.dll
+D:\Ts3era\BackEnd\Ts3era\Ts3era\bin\Release\net6.0\win-x86\Ts3era.staticwebassets.runtime.json

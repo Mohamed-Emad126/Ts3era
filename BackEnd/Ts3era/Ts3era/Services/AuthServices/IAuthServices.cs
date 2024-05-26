@@ -19,6 +19,7 @@ namespace Ts3era.Services.AuthServices
 
         Task<bool> EditProfile(string userid, EditUserProfileDto dto);
 
+        Task<DisplayUserProfile> GetCurrentUser();
         Task<int> GetCountUsers();
     }
 }

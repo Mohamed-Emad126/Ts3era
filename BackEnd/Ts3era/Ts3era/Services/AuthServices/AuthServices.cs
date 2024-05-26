@@ -21,17 +21,20 @@ namespace Ts3era.Services.AuthServices
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly IHttpContextAccessor httpContext;
         private readonly JWT jWT;
         public AuthServices(
             UserManager<ApplicationUser> userManager,
             IOptions<JWT> _Jwt,
             RoleManager<IdentityRole> roleManager,
-            SignInManager<ApplicationUser> signInManager
+            SignInManager<ApplicationUser> signInManager,
+            IHttpContextAccessor httpContext
             )
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.signInManager = signInManager;
+            this.httpContext = httpContext;
             jWT = _Jwt.Value;
         }
 
@@ -388,6 +391,24 @@ namespace Ts3era.Services.AuthServices
         {
             var users =await userManager.Users.CountAsync();
             return users;  
+        }
+
+        public async Task<DisplayUserProfile> GetCurrentUser()
+        {
+            var email = httpContext.HttpContext?.User?.FindFirstValue(ClaimTypes.Email);
+            var user =await  userManager.FindByEmailAsync(email);
+            return
+                new DisplayUserProfile
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    UsreName = user.UserName,
+                    Email = user.Email,
+                    National_Id = user.National_Id,
+                    PhoneNumber = user.PhoneNumber,
+
+                };
+            
         }
     }
 }

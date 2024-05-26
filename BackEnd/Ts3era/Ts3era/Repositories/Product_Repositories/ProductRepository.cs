@@ -84,7 +84,7 @@ namespace Ts3era.Repositories.Product_Repositories
             var product =mapper.Map<Product>(dto);
             dto.Image.CopyTo(stream);
             stream.Close();
-            product.Image="Images/Product/" + uniquefile.ToString();
+            product.Image= "Images/Product/" + uniquefile.ToString();
             
             await context.AddAsync(product);
             await context.SaveChangesAsync();
@@ -128,7 +128,6 @@ namespace Ts3era.Repositories.Product_Repositories
                  await dto.Image.CopyToAsync(datastream);
                 //  product.Image=datastream.ToArray() ;*/
             }
-
             
             product.IsAvailable = dto.IsAvailable;
            
@@ -141,7 +140,6 @@ namespace Ts3era.Repositories.Product_Repositories
             var isvalid = await subCategoryRepository.IsValidSubCategory(dto.SubCategory_ID);
             if (!isvalid)
                 throw new Exception("Invalid SubCategory Id");
-
 
             context.Products.Update(product);
             context.SaveChanges();

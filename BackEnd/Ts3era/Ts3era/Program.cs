@@ -153,7 +153,7 @@ builder.Services.AddTransient<IFavoriteServies, FavoriteServies>();
 builder.Services.AddTransient<IFeedBackRepository, FeedBackRepository>();
 //Automapper 
 builder.Services.AddAutoMapper(typeof(Program));//full project 
-
+builder.Services.AddHttpContextAccessor();
 
 
 

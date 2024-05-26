@@ -1,0 +1,57 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\Images\\Category\\14be7e95-9d46-45d3-91a9-42c3787c4cd2_87-1.jpg",
+      "PackagePath": "staticwebassets\\Images\\Category\\14be7e95-9d46-45d3-91a9-42c3787c4cd2_87-1.jpg"
+    },
+    {
+      "Id": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\Images\\Category\\1bdb961d-089c-4471-81d7-b206ca8f0efa_Screenshot 2024-02-14 152250.png",
+      "PackagePath": "staticwebassets\\Images\\Category\\1bdb961d-089c-4471-81d7-b206ca8f0efa_Screenshot 2024-02-14 152250.png"
+    },
+    {
+      "Id": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\Images\\Category\\d28406f6-a178-46da-be86-2f44f8399705_Screenshot 2023-11-25 142030.png",
+      "PackagePath": "staticwebassets\\Images\\Category\\d28406f6-a178-46da-be86-2f44f8399705_Screenshot 2023-11-25 142030.png"
+    },
+    {
+      "Id": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\Images\\Complaint\\af27056b-3325-463f-84b7-794546202a05_lovepik-fresh-beef-picture_501544269.jpg",
+      "PackagePath": "staticwebassets\\Images\\Complaint\\af27056b-3325-463f-84b7-794546202a05_lovepik-fresh-beef-picture_501544269.jpg"
+    },
+    {
+      "Id": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\Images\\Product\\55323dae-6ed9-4a39-87d2-3e97d623f75b_lovepik-fresh-beef-picture_501544269.jpg",
+      "PackagePath": "staticwebassets\\Images\\Product\\55323dae-6ed9-4a39-87d2-3e97d623f75b_lovepik-fresh-beef-picture_501544269.jpg"
+    },
+    {
+      "Id": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\Images\\Product\\bf9899ce-c577-4916-925f-88ff26bd81cf_lovepik-fresh-beef-picture_501544269.jpg",
+      "PackagePath": "staticwebassets\\Images\\Product\\bf9899ce-c577-4916-925f-88ff26bd81cf_lovepik-fresh-beef-picture_501544269.jpg"
+    },
+    {
+      "Id": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\Images\\Product\\c34eda5b-6a1e-4598-9776-1a0e37b0cc7b_87-1.jpg",
+      "PackagePath": "staticwebassets\\Images\\Product\\c34eda5b-6a1e-4598-9776-1a0e37b0cc7b_87-1.jpg"
+    },
+    {
+      "Id": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\Images\\SubCategory\\5196b2d8-91b9-4435-afde-e0bdd8f1357f_pngtree-supermarket-large-stem-grocery-photo-picture-image_7433556.jpg",
+      "PackagePath": "staticwebassets\\Images\\SubCategory\\5196b2d8-91b9-4435-afde-e0bdd8f1357f_pngtree-supermarket-large-stem-grocery-photo-picture-image_7433556.jpg"
+    },
+    {
+      "Id": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\Images\\SubCategory\\abb33ed8-9fc5-4d90-8345-e8f7ddf11548_87-1.jpg",
+      "PackagePath": "staticwebassets\\Images\\SubCategory\\abb33ed8-9fc5-4d90-8345-e8f7ddf11548_87-1.jpg"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\win-x86\\staticwebassets\\msbuild.Ts3era.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\win-x86\\staticwebassets\\msbuild.build.Ts3era.props",
+      "PackagePath": "build\\Ts3era.props"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\win-x86\\staticwebassets\\msbuild.buildMultiTargeting.Ts3era.props",
+      "PackagePath": "buildMultiTargeting\\Ts3era.props"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\win-x86\\staticwebassets\\msbuild.buildTransitive.Ts3era.props",
+      "PackagePath": "buildTransitive\\Ts3era.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

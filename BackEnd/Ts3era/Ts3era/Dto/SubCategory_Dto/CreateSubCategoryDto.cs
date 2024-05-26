@@ -2,7 +2,7 @@
 {
     public class CreateSubCategoryDto:BaseSubCategoryDto
     {
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
 
     }
 }
