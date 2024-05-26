@@ -79,10 +79,10 @@ namespace Ts3era.Repositories.SubCategory_Repositories
         }
         public async Task<CreateSubCategoryDto> Create(CreateSubCategoryDto dto)
         {
-            if (!allowextention.Contains(Path.GetExtension(dto.Image.FileName).ToLower()))
-                throw new Exception(" Must Allawed .png OR .jpg ");
-            if (dto.Image.Length > maxsizeimage)
-                throw new Exception("Max  Allawed Image 2MB");
+            //if (!allowextention.Contains(Path.GetExtension(dto.Image.FileName).ToLower()))
+            //    throw new Exception(" Must Allawed .png OR .jpg ");
+            //if (dto.Image.Length > maxsizeimage)
+            //    throw new Exception("Max  Allawed Image 2MB");
 
             var isvalid = await categoryRepository.isvaliidcategory(dto.Category_ID);
             if (!isvalid)
@@ -90,15 +90,15 @@ namespace Ts3era.Repositories.SubCategory_Repositories
 
 
 
-            var uploadfile = Path.Combine(webHost.WebRootPath, "Images/SubCategory");
-            var uniquefile =Guid.NewGuid().ToString() + "_" + dto.Image.FileName;
-            var pathfile =Path.Combine(uploadfile, uniquefile);
+            //var uploadfile = Path.Combine(webHost.WebRootPath, "Images/SubCategory");
+            //var uniquefile =Guid.NewGuid().ToString() + "_" + dto.Image.FileName;
+            //var pathfile =Path.Combine(uploadfile, uniquefile);
 
-            using var stream = new FileStream(pathfile, FileMode.Create);
+            //using var stream = new FileStream(pathfile, FileMode.Create);
             var subcategory = mapper.Map<SubCategory>(dto);
-            dto.Image.CopyTo(stream);
-            stream.Close();
-            subcategory.Image= "Images/SubCategory/" +uniquefile.ToString();
+            //dto.Image.CopyTo(stream);
+            //stream.Close();
+            //subcategory.Image= "Images/SubCategory/" +uniquefile.ToString();
             await context.SubCategories.AddAsync(subcategory);
             await context.SaveChangesAsync();
             return dto;

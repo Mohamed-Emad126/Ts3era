@@ -41,6 +41,10 @@
       "PackagePath": "staticwebassets\\Images\\SubCategory\\abb33ed8-9fc5-4d90-8345-e8f7ddf11548_87-1.jpg"
     },
     {
+      "Id": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\Images\\SubCategory\\dd294ff8-f9df-476d-b3e0-f2ffbf9097db_lovepik-fresh-beef-picture_501544269.jpg",
+      "PackagePath": "staticwebassets\\Images\\SubCategory\\dd294ff8-f9df-476d-b3e0-f2ffbf9097db_lovepik-fresh-beef-picture_501544269.jpg"
+    },
+    {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.Ts3era.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },
