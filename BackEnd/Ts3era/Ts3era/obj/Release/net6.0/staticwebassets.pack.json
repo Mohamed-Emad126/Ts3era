@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\Images\\Complaint\\af27056b-3325-463f-84b7-794546202a05_lovepik-fresh-beef-picture_501544269.jpg"
     },
     {
+      "Id": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\Images\\Product\\236a7959-d70d-4c93-9862-382d49f28e22_png-clipart-rice-meter-rice.png",
+      "PackagePath": "staticwebassets\\Images\\Product\\236a7959-d70d-4c93-9862-382d49f28e22_png-clipart-rice-meter-rice.png"
+    },
+    {
       "Id": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\Images\\Product\\55323dae-6ed9-4a39-87d2-3e97d623f75b_lovepik-fresh-beef-picture_501544269.jpg",
       "PackagePath": "staticwebassets\\Images\\Product\\55323dae-6ed9-4a39-87d2-3e97d623f75b_lovepik-fresh-beef-picture_501544269.jpg"
     },
@@ -35,6 +39,10 @@
     {
       "Id": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\Images\\SubCategory\\abb33ed8-9fc5-4d90-8345-e8f7ddf11548_87-1.jpg",
       "PackagePath": "staticwebassets\\Images\\SubCategory\\abb33ed8-9fc5-4d90-8345-e8f7ddf11548_87-1.jpg"
+    },
+    {
+      "Id": "D:\\Ts3era\\BackEnd\\Ts3era\\Ts3era\\wwwroot\\Images\\SubCategory\\dd294ff8-f9df-476d-b3e0-f2ffbf9097db_lovepik-fresh-beef-picture_501544269.jpg",
+      "PackagePath": "staticwebassets\\Images\\SubCategory\\dd294ff8-f9df-476d-b3e0-f2ffbf9097db_lovepik-fresh-beef-picture_501544269.jpg"
     },
     {
       "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.Ts3era.Microsoft.AspNetCore.StaticWebAssets.props",

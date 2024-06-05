@@ -17,6 +17,7 @@ namespace Ts3era.Repositories.Category_Repositories
         Task<bool>isvaliidcategory(int id);
 
         Task<int> GetCountCategory();
+       
 
     }
 }

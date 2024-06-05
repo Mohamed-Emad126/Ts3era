@@ -13,6 +13,9 @@ using Ts3era.Models;
 using Org.BouncyCastle.Crypto;
 using Microsoft.EntityFrameworkCore;
 using Ts3era.Dto.UsersDto;
+using AutoMapper;
+using Ts3era.Dto.FavoriteProduct_Dtos;
+using Ts3era.Models.Data;
 
 namespace Ts3era.Services.AuthServices
 {
@@ -22,19 +25,25 @@ namespace Ts3era.Services.AuthServices
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IHttpContextAccessor httpContext;
+        private readonly IMapper mapper;
+        private readonly ApplicationDbContext context;
         private readonly JWT jWT;
         public AuthServices(
             UserManager<ApplicationUser> userManager,
             IOptions<JWT> _Jwt,
             RoleManager<IdentityRole> roleManager,
             SignInManager<ApplicationUser> signInManager,
-            IHttpContextAccessor httpContext
+            IHttpContextAccessor httpContext,
+            IMapper mapper,
+            ApplicationDbContext  context 
             )
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.signInManager = signInManager;
             this.httpContext = httpContext;
+            this.mapper = mapper;
+            this.context = context;
             jWT = _Jwt.Value;
         }
 
@@ -396,16 +405,28 @@ namespace Ts3era.Services.AuthServices
         public async Task<DisplayUserProfile> GetCurrentUser()
         {
             var email = httpContext.HttpContext?.User?.FindFirstValue(ClaimTypes.Email);
-            var user =await  userManager.FindByEmailAsync(email);
+            var user = await userManager.Users
+                .Include(c=>c.FavoriteProducts)
+                .FirstAsync(c => c.Email == email);//.FindByEmailAsync(email);
+
+            var fav = await context.FavoriteProducts
+                .Include(c => c.product)
+                .Include(c => c.product.SubCategory)
+                .ToListAsync();
+
+            var map = mapper.Map<List<DetailsFavProductDto>>(fav);
+
             return
                 new DisplayUserProfile
                 {
+                    UserId= user.Id,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     UsreName = user.UserName,
                     Email = user.Email,
                     National_Id = user.National_Id,
                     PhoneNumber = user.PhoneNumber,
+                    FavoriteProducts=map
 
                 };
             

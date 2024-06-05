@@ -6,6 +6,7 @@ namespace Ts3era.Repositories.SubCategory_Repositories
     public interface ISubCategoryRepository
     {
         Task<List<SubCategoryDetailsDto>> GetAll();
+        Task<List<SubCategoryDetailsDto>> GetSubcatgeorywithCategoryId(int CategoryId);
         Task<SubCategoryDetailsDto> GetById(int id);
         Task<List<SubCategoryDetailsDto>> Search(string? name);
         Task<SubCategoryDetailsDto> Getname(string name);

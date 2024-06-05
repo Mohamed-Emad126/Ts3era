@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Security.Cryptography.Xml;
+using Ts3era.Dto.ProductDto;
 using Ts3era.Dto.SubCategory_Dto;
 using Ts3era.Models;
 using Ts3era.Models.Data;
@@ -190,6 +192,24 @@ namespace Ts3era.Repositories.SubCategory_Repositories
         
              var isvalid=await context.SubCategories.AnyAsync(c => c.Id == id);
               return isvalid;
+        }
+
+        public async Task<List<SubCategoryDetailsDto>> GetSubcatgeorywithCategoryId(int CategoryId)
+        {
+            var subcategory =await context.SubCategories
+                .Include(c=>c.Products)
+                .Include(c=>c.Category)
+                .Where(c=>c.Category_Id== CategoryId)
+                .ToListAsync();
+            if (!subcategory.Any(c => c.Category_Id == CategoryId))
+                return null;
+
+            var product = await context.Products.ToListAsync();
+            var productmap=mapper.Map<List<ProductDetailsDto>>(product);
+            var subcatgeorymap = mapper.Map<List<SubCategoryDetailsDto>>(subcategory);
+            return subcatgeorymap;
+
+
         }
     }
 }

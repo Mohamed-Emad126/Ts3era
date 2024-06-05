@@ -13,7 +13,7 @@ namespace Ts3era.MappingProfile
             CreateMap<SubCategory, SubCategoryDetailsDto>()
                 .ForMember(s => s.SubCategoryName, d => d.MapFrom(s => s.Name))
                 .ForMember(s => s.CategoryName, d => d.MapFrom(s => s.Category.Name))
-                .ForMember(s => s.products, d => d.MapFrom(s => s.Products.Select(p => p.Name).ToList()))
+                //.ForMember(s => s.products, d => d.MapFrom(s => s.Products.Select(p => p.Name).ToList()))
                 .ForMember(c=>c.Image,c=>c.MapFrom<SubCategoryRevolver>());
 
             CreateMap<CreateSubCategoryDto, SubCategory>()

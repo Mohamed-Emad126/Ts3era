@@ -64,6 +64,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Complaint\af27056b-3325-463f-84b7-794546202a05_lovepik-fresh-beef-picture_501544269.jpg))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Product\236a7959-d70d-4c93-9862-382d49f28e22_png-clipart-rice-meter-rice.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>Ts3era</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Ts3era</BasePath>
+      <RelativePath>Images/Product/236a7959-d70d-4c93-9862-382d49f28e22_png-clipart-rice-meter-rice.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Product\236a7959-d70d-4c93-9862-382d49f28e22_png-clipart-rice-meter-rice.png))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Product\55323dae-6ed9-4a39-87d2-3e97d623f75b_lovepik-fresh-beef-picture_501544269.jpg))">
       <SourceType>Package</SourceType>
       <SourceId>Ts3era</SourceId>
@@ -143,6 +159,22 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\SubCategory\abb33ed8-9fc5-4d90-8345-e8f7ddf11548_87-1.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\SubCategory\dd294ff8-f9df-476d-b3e0-f2ffbf9097db_lovepik-fresh-beef-picture_501544269.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>Ts3era</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Ts3era</BasePath>
+      <RelativePath>Images/SubCategory/dd294ff8-f9df-476d-b3e0-f2ffbf9097db_lovepik-fresh-beef-picture_501544269.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\SubCategory\dd294ff8-f9df-476d-b3e0-f2ffbf9097db_lovepik-fresh-beef-picture_501544269.jpg))</OriginalItemSpec>
     </StaticWebAsset>
   </ItemGroup>
 </Project>

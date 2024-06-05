@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using Ts3era.Dto.SubCategory_Dto;
+using Ts3era.HandleResponseApi;
 using Ts3era.Repositories.Category_Repositories;
 using Ts3era.Repositories.SubCategory_Repositories;
 
@@ -30,6 +31,21 @@ namespace Ts3era.Controllers
 
                 var subcategory=await repository.GetAll();
                 return Ok(subcategory);
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<SubCategoryDetailsDto>>>GetSubcategoryWithCategoryId (int CategoryId)
+        {
+            if (ModelState.IsValid)
+            {
+                var subcategory = await repository.GetSubcatgeorywithCategoryId(CategoryId);
+
+                if (subcategory == null)
+                    return NotFound(new ApiResponse(404, "Not Found Catgeory"));
+                return Ok(subcategory);
+
             }
             return BadRequest(ModelState);
         }

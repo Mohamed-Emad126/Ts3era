@@ -96,6 +96,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Product\55323dae-6ed9-4a39-87d2-3e97d623f75b_lovepik-fresh-beef-picture_501544269.jpg))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Product\a49a35e0-49cd-4048-a963-f95a40f662af_png-clipart-red-onion-white-onion-vegetable-yellow-onion-tandoori-chicken-food-image-file-formats.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>Ts3era</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Ts3era</BasePath>
+      <RelativePath>Images/Product/a49a35e0-49cd-4048-a963-f95a40f662af_png-clipart-red-onion-white-onion-vegetable-yellow-onion-tandoori-chicken-food-image-file-formats.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Product\a49a35e0-49cd-4048-a963-f95a40f662af_png-clipart-red-onion-white-onion-vegetable-yellow-onion-tandoori-chicken-food-image-file-formats.png))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\Product\bf9899ce-c577-4916-925f-88ff26bd81cf_lovepik-fresh-beef-picture_501544269.jpg))">
       <SourceType>Package</SourceType>
       <SourceId>Ts3era</SourceId>
